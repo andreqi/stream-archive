@@ -1,0 +1,49 @@
+html
+  head
+    title Galdos para los vagos
+    script(src="js/jquery.min.js")
+    script(src="js/jquery.scrollzer.min.js")
+    script(src="js/jquery.scrolly.min.js")
+    script(src="js/skel.min.js")
+    script(src="js/skel-layers.min.js")
+    script(src="js/init.js")
+    noscript
+      link(rel="stylesheet", href="css/skel.css")
+      link(rel="stylesheet", href="css/style.css")
+      link(rel="stylesheet", href="css/style-xlarge.css")
+
+  body
+    div#wrapper
+      section#header(class="skel-layers-fixed")
+        header
+          span(class="image avatar")
+            img(src="images/avatar.jpg")
+          h1#logo
+            a Galdos para los vagos
+          p.
+            Grabaciones de Galdos para la gente que no puede <br/>
+            despertar a las 6:00 AM
+        nav#nav 
+          ul
+            li
+              a(class="active", href="#one") Links
+        footer
+          ul.icons
+            each val in ['twitter', 'facebook', 'instagram', 'github', 'email']
+              li
+                a(href="#" class="icon fa-"+val)
+                  span.label= val
+      div#main
+        section#one
+          div.container
+            h3 Links de las grabaciones
+            p Toma tus links juanchi, solo porque la vales
+            div#component !{component}
+            script#props(type="application/json")  !{props}
+      section#footer
+        div.container
+          div.copyright
+            li &copy; Untitled All rights reserved.
+            li Design 
+              a(href="http://html5up.net") HTML5 UP
+    script(src="main.js")

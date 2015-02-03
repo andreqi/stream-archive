@@ -1,42 +1,31 @@
+var nodejsx = require('node-jsx').install();
+
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
+var app = require('./app/app');
+var _ = require('underscore');
 
-var app = express();
+var server = express();
 
 var port = 1234;
-app.listen(port);
+server.listen(port);
 
-app.use(express.static(path.join(__dirname, 'public')));
+server.use(express.static(path.join(__dirname, 'public')));
+server.set('view engine', 'jade');
 
-var template = '<li class="fa-code"><a href="files/[[]]">[[]]</a></li>';
-
-var getlinks = function(links) {
-  console.log(links);
-  var ans = links.map(function(data) {
-    return template.replace('[[]]', data)
-                   .replace('[[]]', data); 
-  });
-  console.log(ans);
-  return ans.join('');
-}
-
-app.get('/galdos', function(req, res) {
-  console.log('gg');
-  fs.readFile('./public/index.html', 'utf8', function (err, data) {
-    if (err) {
-      return console.log(err);
-    } 
-
+server.get('/galdos', function(req, res) {
     fs.readdir('./public/files/', function (err, files) {
-      res.send(
-        data.replace(
-          '[[]]', 
-          getlinks(files.filter(function(file) {
-            return file[0] == '.';
-          }))
-      ));
-    })
-  });
+        var props = {
+            filenames: files.filter(function (file) {
+                return file[0] != '.';
+            }),
+        };
+        props = JSON.stringify(props);
+        res.render('home', {
+            component: app.start(JSON.parse(props)), 
+            props: props,
+        });
+    });
 });
 
